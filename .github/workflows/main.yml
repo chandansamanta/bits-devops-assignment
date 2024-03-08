@@ -52,6 +52,7 @@ jobs:
         with:
           name: code-coverage-report
           path: ./coverage
+          retention-days: 1
 
   Scan:
     name: Scan
