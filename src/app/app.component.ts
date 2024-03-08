@@ -8,6 +8,6 @@ import { RouterOutlet } from '@angular/router';
   templateUrl: './app.component.html',
   styleUrl: './app.component.css'
 })
-export class AppComponent1 {
+export class AppComponent {
   title = 'bits-devops-assignment';
 }
