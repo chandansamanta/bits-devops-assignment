@@ -69,14 +69,16 @@ jobs:
             name: code-coverage-report
             path: ./coverage/
 
-      - name: SonarQube Scan
-        uses: sonarsource/sonarqube-scan-action@master
+      - name: SonarCloud Scan
+        uses: sonarsource/sonarcloud-github-action@master
         with:
           projectBaseDir: ./src
           args: >
+            -Dsonar.organization=bitstest
+            -Dsonar.projectKey=bits-devops-assignment
+            -Dsonar.sources=src/
             -Dsonar.javascript.lcov.reportPaths=./coverage/Icov.info 
             -Dsonar.verbose=true
         env:
-          SONAR_TOKEN: ${{ secrets.SONAR_TOKEN }}
-          SONAR_HOST_URL: ${{ secrets.SONAR_HOST_URL }}
+          SONAR_TOKEN: ${{ secrets.SONAR_TOKEN }} 
 
