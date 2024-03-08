@@ -72,11 +72,11 @@ jobs:
       - name: SonarCloud Scan
         uses: sonarsource/sonarcloud-github-action@master
         with:
-          projectBaseDir: ./src
+          projectBaseDir: /home/runner/work/bits-devops-assignment/bits-devops-assignment
           args: >
             -Dsonar.organization=bitstest
             -Dsonar.projectKey=bits-devops-assignment
-            -Dsonar.sources=./src
+            -Dsonar.sources=./src/
             -Dsonar.javascript.lcov.reportPaths=./coverage/Icov.info 
             -Dsonar.verbose=true
         env:
