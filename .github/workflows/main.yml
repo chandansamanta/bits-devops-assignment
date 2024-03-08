@@ -1,0 +1,84 @@
+name: Build, Test, Lint & Scan
+
+on: push 
+
+jobs:
+  Lint:
+    name: Lint
+    runs-on: ubuntu-latest
+    steps:
+      - uses: actions/checkout@v4
+      - name: Use Node.js 20.x
+        uses: actions/setup-node@v4
+        with:
+          node-version: '20.x'
+    
+      - name: Install Dependencies
+        run: npm ci          
+      - name: Run Lint
+        run: npm run lint
+  Build:
+    name: Build
+    runs-on: ubuntu-latest
+
+    steps:
+      - uses: actions/checkout@v4
+      - name: Use Node.js 20.x
+        uses: actions/setup-node@v4
+        with:
+          node-version: '20.x'
+    
+      - name: Install Dependencies
+        run: npm ci         
+      - name: Build Application
+        run: npm run build
+         
+  Test:
+    name: Test
+    runs-on: ubuntu-latest
+    steps:
+      - uses: actions/checkout@v4
+      - name: Use Node.js 20.x
+        uses: actions/setup-node@v4
+        with:
+          node-version: '20.x'
+    
+      - name: Install Dependencies
+        run: npm ci 
+      - name: Run Unit Tests
+        run: npm run test 
+      - name: Archive code coverage results
+        uses: actions/upload-artifact@v4
+        with:
+          name: code-coverage-report
+          path: ./coverage
+          retention-days: 1
+
+  Scan:
+    name: Scan
+    needs: Test
+    runs-on: ubuntu-latest
+    steps:
+      - uses: actions/checkout@v4
+        with:
+          # Disabling shallow clones is recommended for improving the relevancy of reporting
+          fetch-depth: 0
+      - name: Download code coverage results
+        uses: actions/download-artifact@v4
+        with:
+            name: code-coverage-report
+            path: ./coverage/
+
+      - name: SonarCloud Scan
+        uses: sonarsource/sonarcloud-github-action@master
+        with:
+          projectBaseDir: /home/runner/work/bits-devops-assignment/bits-devops-assignment
+          args: >
+            -Dsonar.organization=bitstest
+            -Dsonar.projectKey=bits-devops-assignment
+            -Dsonar.sources=src
+            -Dsonar.javascript.lcov.reportPaths=./coverage/Icov.info 
+            -Dsonar.verbose=true
+        env:
+          SONAR_TOKEN: ${{ secrets.SONAR_TOKEN }} 
+
