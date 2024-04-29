@@ -96,7 +96,7 @@ jobs:
       run: terraform init
 
     - name: Terraform Plan
-      run: terraform Plan -no-color
+      run: terraform plan -no-color
 
     - name: Terraform Apply
       run: terraform apply -no-color
