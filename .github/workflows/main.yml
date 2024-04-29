@@ -81,4 +81,57 @@ jobs:
             -Dsonar.verbose=true
         env:
           SONAR_TOKEN: ${{ secrets.SONAR_TOKEN }} 
+  Prepare: 
+      name: Prepare Infrastructure
+      needs: Build
+      runs-on: ubuntu-latest
+      steps:
+      - uses: actions/checkout@v4
+      - uses: hashicorp/setup-terraform@v3
+      
+      - name: Install ZIP
+        run: sudo apt install zip 
+
+      - name: Package Lamda
+        run: sudo mkdir lamda | zip ./lamda/downloadUserInfo.zip downloadUserInfo.py | zip -r ./lamda/uploadUserInfo.zip uploadUserInfo.py
+        working-directory: ./aws-script
+
+      - name: Archive Lamda Packages
+        uses: actions/upload-artifact@v4
+        with:
+          name: lamda-zip
+          path: ./lamda
+          retention-days: 1
   
+      - name: Terraform Init
+        run: terraform init
+        working-directory: ./aws-script
+  
+      - name: Terraform Validate
+        run: terraform validate -no-color
+        working-directory: ./aws-script
+  Deploy:
+      name: Deploy Infrastructure
+      needs: Prepare
+      runs-on: ubuntu-latest
+      steps:
+      - uses: actions/checkout@v4
+      - uses: hashicorp/setup-terraform@v3
+
+      - name: Download Lamda ZIP Files 
+        uses: actions/download-artifact@v4
+        with:
+          name: lamda-zip
+          path: ./aws-script/
+      
+      - name: Terraform Init
+        run: terraform init
+        working-directory: ./aws-script
+  
+      - name: Terraform Plan
+        run: terraform plan -no-color
+        working-directory: ./aws-script
+        
+      - name: Terraform Apply
+        run: terraform apply -no-color -auto-approve -input=false
+        working-directory: ./aws-script
