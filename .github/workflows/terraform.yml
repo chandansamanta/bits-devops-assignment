@@ -15,7 +15,7 @@
         run: sudo apt install zip 
 
       - name: Package Lamda
-        run: zip ./lamda/downloadUserInfo.zip downloadUserInfo.py | zip ./lamda/uploadUserInfo.zip uploadUserInfo.py
+        run: zip -r ./lamda/downloadUserInfo.zip downloadUserInfo.py | zip -r ./lamda/uploadUserInfo.zip uploadUserInfo.py
         working-directory: ./aws-script
 
       - name: Archive Lamda Packages
