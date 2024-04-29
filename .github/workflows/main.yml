@@ -82,3 +82,24 @@ jobs:
         env:
           SONAR_TOKEN: ${{ secrets.SONAR_TOKEN }} 
 
+  DeployAWS:
+    name: Deploy Infrastructure
+    needs: Build
+    runs-on: ubuntu-latest
+    steps:
+
+    - name: Checkout Repo
+      uses: actions/checkout@v1
+
+    - name: Terraform Init
+      uses: hashicorp/terraform-github-actions/init@v0.4.0
+      env: 
+        TF_ACTION_WORKING_DIR: 'aws-script' 
+
+    - name: Terraform Validate
+      uses: hashicorp/terraform-github-actions/validate@v0.3.7
+
+    - name: Terraform Apply
+      uses: hashicorp/terraform-github-actions/apply@v0.4.0
+      env: 
+        TF_ACTION_WORKING_DIR: 'aws-script' 
