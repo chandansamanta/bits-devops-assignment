@@ -89,14 +89,17 @@ jobs:
     steps:
     - uses: actions/checkout@v4
     - uses: hashicorp/setup-terraform@v3
-      working-directory: ./aws-script
+      
 
     - name: Terraform Init
       run: terraform init
+      working-directory: ./aws-script
 
     - name: Terraform Plan
       run: terraform plan -no-color
+      working-directory: ./aws-script
 
     - name: Terraform Apply
       run: terraform apply -no-color
+      working-directory: ./aws-script
      
