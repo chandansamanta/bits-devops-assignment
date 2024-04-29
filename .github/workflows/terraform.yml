@@ -5,7 +5,7 @@
   
   jobs: 
     Prepare: 
-      name: Deploy Infrastructure
+      name: Prepare Infrastructure
       runs-on: ubuntu-latest
       steps:
       - uses: actions/checkout@v4
@@ -15,7 +15,7 @@
         run: sudo apt install zip 
 
       - name: Package Lamda
-        run: zip downloadUserInfo.py downloadUserInfo.zip | zip uploadUserInfo.py uploadUserInfo.zip
+        run: zip downloadUserInfo.zip downloadUserInfo.py | zip uploadUserInfo.zip uploadUserInfo.py
         working-directory: ./aws-script
   
       - name: Terraform Init
