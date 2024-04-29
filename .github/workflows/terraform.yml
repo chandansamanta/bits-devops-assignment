@@ -1,0 +1,41 @@
+ 
+  name: Deploy Infrastructure to AWS
+
+  on: push 
+  
+  jobs: 
+    Prepare: 
+      name: Deploy Infrastructure
+      runs-on: ubuntu-latest
+      steps:
+      - uses: actions/checkout@v4
+      - uses: hashicorp/setup-terraform@v3
+      
+      - name: Install ZIP
+        run: sudo apt install zip 
+
+      - name: Package Lamda
+        run: zip downloadUserInfo.py downloadUserInfo.zip | zip uploadUserInfo.py uploadUserInfo.zip
+        working-directory: ./aws-script
+  
+      - name: Terraform Init
+        run: terraform init
+        working-directory: ./aws-script
+  
+      - name: Terraform Plan
+        run: terraform plan -no-color
+        working-directory: ./aws-script
+
+    Deploy:
+      name: Deploy Infrastructure
+      needs: Prepare
+      runs-on: ubuntu-latest
+      steps:
+      - uses: actions/checkout@v4
+      - uses: hashicorp/setup-terraform@v3
+        
+      - name: Terraform Apply
+        run: terraform apply -no-color -auto-approve -input=false
+        working-directory: ./aws-script
+       
+  
