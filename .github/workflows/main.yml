@@ -1,4 +1,4 @@
-name: Build, Test, Lint & Scan
+name: Build, Test, Lint, Scan & Deploy
 
 on: push 
 
