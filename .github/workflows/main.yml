@@ -89,8 +89,7 @@ jobs:
     steps:
     - uses: actions/checkout@v4
     - uses: hashicorp/setup-terraform@v3
-      env: 
-        TF_ACTION_WORKING_DIR: 'aws-script' 
+      working-directory: ./aws-script
 
     - name: Terraform Init
       run: terraform init
