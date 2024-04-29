@@ -22,8 +22,8 @@
         run: terraform init
         working-directory: ./aws-script
   
-      - name: Terraform Plan
-        run: terraform plan -no-color
+      - name: Terraform Validate
+        run: terraform validate -no-color
         working-directory: ./aws-script
 
     Deploy:
@@ -33,6 +33,10 @@
       steps:
       - uses: actions/checkout@v4
       - uses: hashicorp/setup-terraform@v3
+
+      - name: Terraform Plan
+        run: terraform plan -no-color
+        working-directory: ./aws-script
         
       - name: Terraform Apply
         run: terraform apply -no-color -auto-approve -input=false
