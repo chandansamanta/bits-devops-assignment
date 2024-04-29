@@ -99,5 +99,5 @@ jobs:
       run: terraform validate -no-color
 
     - name: Terraform Apply
-      run: terraform Apply -no-color
+      run: terraform apply -no-color
      
