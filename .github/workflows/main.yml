@@ -87,19 +87,17 @@ jobs:
     needs: Build
     runs-on: ubuntu-latest
     steps:
-
-    - name: Checkout Repo
-      uses: actions/checkout@v1
+    - uses: actions/checkout@v4
+    - uses: hashicorp/setup-terraform@v3
+      env: 
+        TF_ACTION_WORKING_DIR: 'aws-script' 
 
     - name: Terraform Init
-      uses: hashicorp/terraform-github-actions/init@v0.4.0
-      env: 
-        TF_ACTION_WORKING_DIR: 'aws-script' 
+      run: terraform init
 
     - name: Terraform Validate
-      uses: hashicorp/terraform-github-actions/validate@v0.3.7
+      run: terraform validate -no-color
 
     - name: Terraform Apply
-      uses: hashicorp/terraform-github-actions/apply@v0.4.0
-      env: 
-        TF_ACTION_WORKING_DIR: 'aws-script' 
+      run: terraform Apply -no-color
+     
