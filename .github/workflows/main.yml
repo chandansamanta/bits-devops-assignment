@@ -35,6 +35,7 @@ jobs:
          
   Test:
     name: Test
+    needs: Build
     runs-on: ubuntu-latest
     steps:
       - uses: actions/checkout@v4
@@ -93,7 +94,7 @@ jobs:
         run: sudo apt install zip 
 
       - name: Package Lamda
-        run: sudo mkdir lamda | zip ./lamda/downloadUserInfo.zip downloadUserInfo.py | zip -r ./lamda/uploadUserInfo.zip uploadUserInfo.py
+        run: sudo mkdir /lamda | sudo chmod a+rwx /lamda | zip ./lamda/downloadUserInfo.zip downloadUserInfo.py | zip -r ./lamda/uploadUserInfo.zip uploadUserInfo.py
         working-directory: ./aws-script
 
       - name: Archive Lamda Packages
