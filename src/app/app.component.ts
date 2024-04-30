@@ -17,11 +17,12 @@ export class AppComponent {
   name: string = '';
   mobile: string = '';
   address: string = '';
+  endpoint = 'https://fzikk1yudi.execute-api.us-east-1.amazonaws.com/dev';
   constructor(private httpclient: HttpClient) {
     this.loadUser();
   }
   save() {
-    this.httpclient.post('https://fzikk1yudi.execute-api.us-east-1.amazonaws.com/dev/saveUser', {
+    this.httpclient.post(this.endpoint + '/saveUser', {
       Name: this.name,
       Mobile: this.mobile,
       Address: this.address
@@ -33,7 +34,7 @@ export class AppComponent {
     })
   }
   loadUser() {
-    this.httpclient.get('https://fzikk1yudi.execute-api.us-east-1.amazonaws.com/dev/getAllUsers').subscribe((res: any) => {
+    this.httpclient.get(this.endpoint + '/getAllUsers').subscribe((res: any) => {
       this.listOfUser = res;
     })
   }
