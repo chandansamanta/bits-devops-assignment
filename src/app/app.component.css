@@ -1,0 +1,56 @@
+.form-fields {
+    label {
+        display: inline-block;
+        width: 100px;
+    }
+
+    button {
+        background-color: #d51d9e;
+        /* Green */
+        border: none;
+        color: white;
+        padding: 10px 32px;
+        text-align: center;
+        text-decoration: none;
+        display: inline-block;
+        font-size: 12px;
+        cursor: pointer;
+    }
+
+    input,
+    textarea {
+        border: 1px solid #d51d9e;
+        padding: 4px;
+    }
+
+    p {
+        margin-top: 5px;
+    }
+}
+
+#customers {
+    border-collapse: collapse;
+    width: 100%;
+}
+
+#customers td,
+#customers th {
+    border: 1px solid #ddd;
+    padding: 8px;
+}
+
+#customers tr:nth-child(even) {
+    background-color: #f2f2f2;
+}
+
+#customers tr:hover {
+    background-color: #ddd;
+}
+
+#customers th {
+    padding-top: 12px;
+    padding-bottom: 12px;
+    text-align: left;
+    background-color: #d51d9e;
+    color: white;
+}

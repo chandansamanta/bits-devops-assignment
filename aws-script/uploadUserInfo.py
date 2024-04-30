@@ -11,9 +11,9 @@ def lambda_handler(event, context):
     table.put_item(
           Item = {
                'ID': str(uuid.uuid4()),
-               'Name': data.Name,
-               'Address': data.Address,
-               'Mobile': data.Mobile,
+               'Name': data['Name'],
+               'Address': data['Address'],
+               'Mobile': data['Mobile'],
           }
     )
     return {

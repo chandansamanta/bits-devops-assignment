@@ -41,4 +41,5 @@ testem.log
 .DS_Store
 Thumbs.db
 /aws-script/.terraform
+/aws-script/*.zip
 
